@@ -1,4 +1,4 @@
-# задача 1. Напишите программу, которая принимает на вход цифру, обозначающую день недели, и проверяет, является ли этот день выходным.
+# задача 1. Напишите программу, которая принимает на вход цифру,обозначающую день недели, и проверяет, является ли этот день выходным.
 # *Пример:*
 # - 6 -> да
 # - 7 -> да
@@ -21,11 +21,17 @@ except:
 print('\ntask_2')
 try:
     a = [True, False]
+    flag = a[0]
     for x in a:
         for y in a:
             for z in a:
+                f = not (x or y or z) == (not x and not y and not z)
                 print(
-                    f'x: {x}, y: {y}, z: {z}, ¬(X ⋁ Y ⋁ Z) = ¬X ⋀ ¬Y ⋀ ¬Z: {not (x or y or z) == (not x and not y and not z)}')
+                    f'x: {x}, y: {y}, z: {z}, ¬(X ⋁ Y ⋁ Z) = ¬X ⋀ ¬Y ⋀ ¬Z: {f}')
+                if not f:
+                    flag = a[1]
+    print(flag)
+
 except:
     print('Entered incorrect data')
 
