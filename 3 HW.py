@@ -22,14 +22,14 @@ def CheckInt(number):
 
 def IntArr(number_val, int_arr):
     int_arr = []
-    sum = 0
+    sum_val = 0
     for i in range(number_val):
         n = random.randint(1, 1000)
         int_arr.append(n)
         if i % 2 != 0:
-            sum += n
+            sum_val += n
     print(int_arr)
-    print(f'Sum odd elements: {sum}')
+    print(f'Sum odd elements: {sum_val}')
     return int_arr
 
 
@@ -57,7 +57,7 @@ def Mult_Couple(int_arr):
         return None
     arr_mult = []
     for i in range((len_arr + 1) // 2):
-        arr_mult.append(int_arr[i] * int_arr[len_arr - (i + 1)])
+        arr_mult.append(int_arr[i] * int_arr[- (i + 1)])
     return arr_mult
 
 
@@ -71,7 +71,7 @@ print(Mult_Couple(val_arr))
 
 print('\ntask3')
 
-lst = [11]
+lst = [1.1, 1.2, 3.1, 5, 10.01]
 
 
 def Dif_Frac_Arr(fl_arr):
@@ -86,7 +86,7 @@ def Dif_Frac_Arr(fl_arr):
             len_string = len(str_fl[str_fl.index('.') + 1:])
             if len_max_string < len_string:
                 len_max_string = len_string
-        except: 
+        except:
             len_string = 0
         finally:
             temp_fl = Decimal(fl_arr[i]) - int(fl_arr[i])
@@ -108,7 +108,7 @@ def Dif_Frac_Arr(fl_arr):
 
 print(Dif_Frac_Arr(lst))
 
-# Задача 4. Напишите программу, которая будет преобразовывать десятичное 
+# Задача 4. Напишите программу, которая будет преобразовывать десятичное
 # число в двоичное.
 # Пример:
 # - 45 -> 101101
@@ -155,8 +155,10 @@ def Arr_Neg_Fib(number_val):
             temp_numb = arr_fib[i] + arr_fib[i - 1]
             arr_fib.append(temp_numb)
         indx_cur = len(arr_fib) - 1
-        if number_val % 2 == 0: int_corr = 1
-        else: int_corr = -1           
+        if number_val % 2 == 0:
+            int_corr = 1
+        else:
+            int_corr = -1
         for i in range(2, number_val):
             arr_fib.insert(i - 2, arr_fib[indx_cur] * int_corr)
             int_corr *= -1
