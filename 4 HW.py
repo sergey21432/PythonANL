@@ -75,7 +75,7 @@ def get_list_prime_factors(number_val):
             if number_val % i == 0:
                 if not (i in lst_prime_factors):
                     lst_prime_factors.append(i)
-                while(number_val % i == 0):
+                while (number_val % i == 0):
                     number_val //= i
                 break
     return lst_prime_factors
@@ -160,7 +160,9 @@ def get_string_polynom(numb_val):
                 if i != numb_val:
                     if int_coef != 1:
                         str_member += '*'
-                    str_member += f'x^{numb_val - i}'
+                    str_member += 'x'
+                    if (numb_val - i != 1):
+                        str_member += f'^{numb_val - i}'
                 str_polynom += str_member
         return str_polynom
     except:
@@ -180,16 +182,90 @@ number_file.close()
 # Задача - сформировать файл, содержащий сумму многочленов.
 
 print('\ntask5')
-# не успел, доделаю
 
-# def get_sum_polynom(str_polyn_1, str_polyn_2):
-#     try:
-#         str_sum_polynom = ''
-#         ToDo: цикл на постепенной поиск и суммирование коэффициентов,
-#           может словарь?
-#         return str_sum_polynom
-#     except:
-#         return 'Error'
+
+def get_coef_polynom(str_polyn):
+    try:
+        dict_coef_power = {}
+        start_pos = 0
+        end_pos = len(str_polyn) - 1
+        pos_x = 0
+        while True:
+            pos_x = str_polyn.find('x', start_pos, end_pos)
+            if pos_x < 0:
+                power = 0
+                if len(str_polyn) == start_pos:
+                    int_coef = int(str_polyn[start_pos])
+                else:
+                    int_coef = int(str_polyn[start_pos: len(str_polyn)])
+                dict_coef_power[power] = int_coef
+                return dict_coef_power
+            pos_plus = str_polyn.find('+', pos_x + 1, end_pos)
+            if pos_plus < 0:
+                pos_power = - 1
+            else:
+                pos_power = pos_plus - 1
+            if str_polyn[pos_x + 1] == '^':
+                if pos_x + 2 == pos_power:
+                    power = int(str_polyn[pos_x + 2])
+                else:
+                    power = int(str_polyn[pos_x + 2: pos_power])
+            else:
+                power = 1
+
+            if pos_x > start_pos:
+                if pos_x - 1 == start_pos:
+                    int_coef = int(str_polyn[start_pos])
+                else:
+                    int_coef = int(str_polyn[start_pos: pos_x - 1])
+            else:
+                int_coef = 1
+            dict_coef_power[power] = int_coef
+            start_pos = pos_power + 2
+            if pos_power < 0:
+                return dict_coef_power    
+    except:
+        return None
+
+
+def get_sum_polyn(list_dict):
+    try:
+        dict_sum_coef = {}
+        max_power = max(list_dict[0].keys())
+        if max_power < max(list_dict[1].keys()):
+            max_power = max(list_dict[1].keys())
+        for i in range(max_power + 1):
+            dict_sum_coef[i] = 0
+            for j in range(2):
+                if i in list_dict[j].keys():
+                    dict_sum_coef[i] += list_dict[j][i]
+        return dict_sum_coef
+    except:
+        return None
+
+
+def get_string_polynom(dict_sum_coef):
+    try:
+        max_power = max(dict_sum_coef.keys())
+        str_polynom = ''
+        for i in range(max_power + 1):
+            int_coef = dict_sum_coef[max_power - i]
+            if int_coef != 0:
+                str_member = ''
+                if i != 0:
+                    str_member += '+'
+                if int_coef != 1 or i == max_power:
+                    str_member += f'{int_coef}' 
+                if i != max_power:
+                    if int_coef != 1:
+                        str_member += '*'
+                    str_member += 'x'
+                    if (max_power - i != 1):
+                        str_member += f'^{max_power - i}'
+                str_polynom += str_member
+        return str_polynom
+    except:
+        return None
 
 
 def read_file(number):
@@ -202,3 +278,13 @@ def read_file(number):
 lst_polyn = []
 for i in range(1, 3):
     lst_polyn.append(read_file(i))
+
+lst_dict_polyn = []
+for i in range(2):
+    lst_dict_polyn.append(get_coef_polynom(lst_polyn[i]))
+
+dict_sum_polyn = get_sum_polyn(lst_dict_polyn)
+
+with open('file_result_5.txt', 'w') as number_file:
+    number_file.write(get_string_polynom(dict_sum_polyn))
+number_file.close()
