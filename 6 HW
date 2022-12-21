@@ -1,0 +1,31 @@
+# Задача 1. Задайте последовательность чисел. Напишите программу, которая
+# выведет список неповторяющихся элементов исходной последовательности.
+
+print('\ntask1')
+while True:
+    try:
+        lst = list(map(int, input('Enter numbers separated spaces: ').split()))
+        break
+    except: print('Incorrect data. Retrty again, for example: "1 3 6 3 5".')
+
+print(*lst)
+print(*list([lst[i] for i in range(len(lst)) if lst[i] not in lst[: i]]))
+print(*list(filter(lambda x: lst.count(x) == 1, lst)))
+
+# Задача 2. Задайте список из n чисел последовательности (1+(1/n)^n и выведите
+# на экран их сумму.
+# Пример:
+# - Для n = 6: {1: 4, 2: 7, 3: 10, 4: 13, 5: 16, 6: 19}
+
+print('\ntask2')
+try:
+    number = float(input('Enter an integer positive number more zero: '))
+    if number % 1 == 0 and number > 0:
+        number = int(number)
+        lstResult = list(map(lambda i: (1 + (1 / i)) ** i, [i for i in range(1, number)]))
+        print(*list(enumerate(lstResult, 1)))
+        print(sum(lstResult))
+    else:
+        print('Entered incorrect data')
+except:
+    print('Entered incorrect data')

@@ -1,4 +1,3 @@
-from decimal import Decimal
 import random
 
 # Задача 1. Напишите программу, удаляющую из текста все слова, содержащие "абв".
